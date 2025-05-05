@@ -1,7 +1,12 @@
+'use client';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ModeToggle } from '../theme/toggle';
+import { Button } from '../ui/button';
+import Link from 'next/link';
+import { User } from 'lucia';
+import { logout } from '@/actions/auth';
 
-export default function Header() {
+export default function Header({ user }: { user: User | null }) {
 	return (
 		<header className="pt-8 pb-2 flex flex-col md:flex-row justify-between text-white items-center border-b border-gray-300">
 			<div className="flex gap-4 w-full md:w-auto justify-between md:justify-start items-center">
@@ -27,8 +32,20 @@ export default function Header() {
 				</div>
 			</div>
 			<div className="md:flex gap-4 items-center hidden">
-				<span className="text-sm md:text-base">Wanderlust your home</span>
 				<ModeToggle className="text-black dark:text-white" />
+				{user ? (
+					<Button
+						onClick={async () => {
+							await logout();
+						}}
+						size={'lg'}>
+						Logout
+					</Button>
+				) : (
+					<Link href={'/login'}>
+						<Button size={'lg'}>Login</Button>
+					</Link>
+				)}
 			</div>
 		</header>
 	);

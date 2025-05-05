@@ -1,15 +1,16 @@
+import { User } from 'lucia';
 import Header from '../shared/header';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 
-export default function Hero() {
+export default function Hero({ user }: { user: User | null }) {
 	return (
 		<section
 			style={{ backgroundImage: 'url("/images/house3.jpg")' }}
 			className=" h-svh md:h-dvh bg-cover bg-no-repeat bg-center">
 			<div className="bg-black/20 w-full h-full">
 				<div className=" w-[96%] mx-auto flex h-full flex-col justify-between">
-					<Header />
+					<Header user={user} />
 					<div className="flex justify-between items-center py-6">
 						<p className="text-sm md:text-base w-full text-white md:w-[10rem]">
 							Find private stays that work for you

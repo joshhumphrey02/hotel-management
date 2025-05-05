@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/lib/prisma/generated"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String  @id @default(cuid())
+  uid       Int     @unique @default(autoincrement())
+  firstName String?
+  lastName  String?
+  email     String
+  password  String
+
+  sessions UserSession[]
+}
+
+model UserSession {
+  id        String    @id @default(cuid())
+  userId    String
+  expiresAt DateTime?
+  user      User      @relation(fields: [userId], references: [id])
+}
